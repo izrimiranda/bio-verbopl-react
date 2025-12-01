@@ -1,8 +1,9 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home } from './pages/Home';
-import { Admin } from './pages/Admin';
-import { Groups } from './pages/Groups';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Home } from './src/pages/Home';
+import { Admin } from './src/pages/Admin';
+import { Groups } from './src/pages/Groups';
+import { Ministrations } from './src/pages/Ministrations';
 
 const App: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const App: React.FC = () => {
         <Route path="/" element={<Home />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/groups" element={<Groups />} />
+        <Route path="/ministrations" element={<Ministrations />} />
       </Routes>
     </Router>
   );

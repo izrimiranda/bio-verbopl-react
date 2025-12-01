@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-dark: #383f51;
+  --color-primary-DEFAULT: #383f51;
+  --color-primary-light: #4b5266;
+  
+  --color-secondary-dark: #2c3340;
+  --color-secondary-DEFAULT: #1e2329;
+  
+  --color-beige-DEFAULT: #bca488;
+  --color-beige-light: #d4b496;
+  --color-beige-pale: #c7a687;
+  
+  --font-family-sans: Inter, sans-serif;
+  
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+  --animate-shine: shine 3s infinite;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-out {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  20%, 100% { left: 100%; }
+}
+
+@keyframes hand-click {
+  0% { 
+    opacity: 0;
+    transform: scale(1) translateY(-20px);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  40% {
+    transform: scale(0.9) translateY(4px);
+  }
+  50% {
+    transform: scale(1) translateY(0);
+  }
+  60% {
+    transform: scale(0.9) translateY(4px);
+  }
+  70% {
+    transform: scale(1) translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1) translateY(-20px);
+  }
+}
+
+.animate-hand-click {
+  animation: hand-click 1.5s ease-in-out;
+}
+
+.animate-fade-in-out {
+  animation: fade-in-out 3.5s ease-in-out;
+}
+
+:root {
+  --primary-dark: #383f51;
+  --secondary-dark: #2c3340;
+  --tertiary-dark: #1e2329;
+  --primary-beige: #bca488;
+  --secondary-beige: #c7a687;
+  --tertiary-beige: #d4b496;
+  --light-overlay: rgba(188, 164, 136, 0.1);
+  --gradient-primary: linear-gradient(135deg, #383f51 0%, #2c3340 100%);
+  --gradient-beige: linear-gradient(135deg, #bca488 0%, #d4b496 100%);
+  --gradient-light: linear-gradient(135deg, rgba(188, 164, 136, 0.05) 0%, rgba(199, 166, 135, 0.1) 100%);
+}
+
+body {
+  background-color: var(--primary-dark);
+  color: #f3f4f6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--secondary-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-beige);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--tertiary-beige);
+}

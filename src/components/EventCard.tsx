@@ -1,6 +1,7 @@
 import React from 'react';
 import { EventItem } from '../types';
 import { Calendar, ExternalLink } from 'lucide-react';
+import { storageService } from '../services/storageService';
 
 interface EventCardProps {
   event: EventItem;
@@ -12,6 +13,11 @@ export const EventCard: React.FC<EventCardProps> = ({ event, delay }) => {
     if (!dateStr) return null;
     const [y, m, d] = dateStr.split('-');
     return `${d}/${m}/${y}`;
+  };
+
+  const handleClick = () => {
+    // Track event click
+    storageService.trackEventClick(event.id);
   };
 
   const start = formatDate(event.startDate || '');
@@ -32,22 +38,16 @@ export const EventCard: React.FC<EventCardProps> = ({ event, delay }) => {
       </div>
       
       <div className="flex flex-col flex-grow p-5 text-center">
-        <h3 className="text-xl font-bold text-white mb-2 leading-tight drop-shadow-sm">
+        <h3 className="text-xl font-bold text-white mb-4 leading-tight drop-shadow-sm">
           {event.name}
         </h3>
-        
-        {start && (
-          <div className="flex items-center justify-center gap-2 text-beige-light text-sm mb-4 font-medium">
-            <Calendar className="w-4 h-4" />
-            <span>{start}</span>
-          </div>
-        )}
         
         <div className="mt-auto">
           <a 
             href={event.link} 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={handleClick}
             className="inline-flex items-center justify-center gap-2 w-full py-3 px-6 rounded-full bg-gradient-to-r from-primary-dark to-secondary-dark hover:from-beige hover:to-beige-light text-white font-semibold shadow-lg transition-all duration-300 hover:shadow-beige/30 group-hover:scale-105 relative overflow-hidden"
           >
             <span>Fazer Inscrição</span>

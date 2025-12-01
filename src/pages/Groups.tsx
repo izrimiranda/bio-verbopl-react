@@ -29,13 +29,30 @@ export const Groups: React.FC = () => {
     <div className="min-h-screen relative font-sans text-gray-100 pb-20">
       <MosaicBackground />
 
+      {/* Header */}
+      <header className="relative z-10 bg-primary shadow-lg">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <img 
+              src="https://i.imgur.com/HGjl2U8.png" 
+              alt="Igreja Verbo da Vida - Pedro Leopoldo" 
+              className="h-12 w-auto"
+            />
+          </Link>
+          <Link 
+            to="/" 
+            className="text-white hover:text-beige transition-colors text-sm font-medium"
+          >
+            ← Voltar
+          </Link>
+        </div>
+      </header>
+
       <div className="relative z-10 container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
-          <Link to="/" className="inline-flex items-center text-beige hover:text-white transition-colors mb-4">
-            <ArrowLeft className="w-4 h-4 mr-2" /> Voltar
-          </Link>
           <h1 className="text-3xl font-bold text-white drop-shadow-md flex items-center gap-3">
-            <UsersIcon /> Grupos de Crescimento
+            <img src="/images/icone-gc.png" alt="Grupos de Crescimento" className="w-8 h-8 object-contain" />
+            Grupos de Crescimento
           </h1>
         </div>
 
@@ -102,6 +119,40 @@ export const Groups: React.FC = () => {
            )}
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="relative z-10 bg-primary text-white py-8 mt-12">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col items-center gap-6">
+            {/* Logo */}
+            <img 
+              src="https://i.imgur.com/HGjl2U8.png" 
+              alt="Igreja Verbo da Vida - Pedro Leopoldo" 
+              className="h-16 w-auto opacity-90"
+            />
+            
+            {/* Info */}
+            <div className="text-center">
+              <p className="text-sm opacity-80">
+                © {new Date().getFullYear()} Igreja Verbo da Vida Pedro Leopoldo
+              </p>
+              <p className="text-xs opacity-70 mt-1">
+                Todos os direitos reservados
+              </p>
+            </div>
+            
+            {/* Tech Credit */}
+            <div className="text-center border-t border-white/20 pt-4 w-full max-w-md">
+              <p className="text-xs opacity-70">
+                Departamento de Tecnologia
+              </p>
+              <p className="text-xs opacity-60 mt-1">
+                Desenvolvido com ❤️
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
@@ -117,8 +168,8 @@ const GroupCard: React.FC<{ group: GroupItem }> = ({ group }) => (
           {group.neighborhood.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
         </h3>
       </div>
-      <div className="p-2 bg-beige/10 rounded-full text-beige">
-        <UsersIcon className="w-5 h-5" />
+      <div className="p-2 bg-beige/10 rounded-full flex items-center justify-center">
+        <img src="/images/icone-gc.png" alt="GC" className="w-5 h-5 object-contain" />
       </div>
     </div>
 
@@ -141,16 +192,10 @@ const GroupCard: React.FC<{ group: GroupItem }> = ({ group }) => (
       href={group.contactLink}
       target="_blank"
       rel="noreferrer"
-      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold transition-colors shadow-lg shadow-green-900/20"
+      className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg bg-[#25D366] hover:bg-[#128C7E] text-white font-semibold transition-colors shadow-lg shadow-green-900/20 cursor-pointer"
     >
       <MessageCircle className="w-5 h-5" />
       Entrar em Contato
     </a>
   </div>
-);
-
-const UsersIcon: React.FC<{className?: string}> = ({ className }) => (
-  <svg className={className || "w-6 h-6"} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-  </svg>
 );
