@@ -39,7 +39,8 @@ try {
     }
     
     // Criar pasta capas se não existir
-    $uploadDir = __DIR__ . '/../public/capas/';
+    // No servidor HestiaCP: /home/verboadmin/web/bio.verbopedroleopoldo.com.br/public_html/capas
+    $uploadDir = __DIR__ . '/../capas/';
     if (!is_dir($uploadDir)) {
         mkdir($uploadDir, 0755, true);
     }
@@ -54,8 +55,8 @@ try {
         throw new Exception('Erro ao salvar arquivo no servidor');
     }
     
-    // Retornar caminho relativo
-    $relativePath = '/public/capas/' . $fileName;
+    // Retornar caminho relativo (sem 'public/' pois já é o root do servidor web)
+    $relativePath = 'capas/' . $fileName;
     
     echo json_encode([
         'success' => true,

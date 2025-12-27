@@ -10,11 +10,11 @@ export const storageService = {
   getEvents: async (): Promise<EventItem[]> => {
     try {
       const response = await fetch(`${API_BASE_URL}/events.php`);
-      
+
       if (!response.ok) {
         throw new Error('Erro ao buscar eventos');
       }
-      
+
       const events: EventItem[] = await response.json();
       return events;
     } catch (error) {
@@ -35,12 +35,12 @@ export const storageService = {
         },
         body: JSON.stringify(event)
       });
-      
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Erro ao adicionar evento');
       }
-      
+
       // Retornar lista atualizada
       return await storageService.getEvents();
     } catch (error) {
@@ -54,6 +54,8 @@ export const storageService = {
    */
   updateEvent: async (updatedEvent: EventItem): Promise<EventItem[]> => {
     try {
+      console.log('Sending PUT request to update event:', updatedEvent);
+
       const response = await fetch(`${API_BASE_URL}/events.php`, {
         method: 'PUT',
         headers: {
@@ -61,14 +63,20 @@ export const storageService = {
         },
         body: JSON.stringify(updatedEvent)
       });
-      
+
+      console.log('Update response status:', response.status, response.statusText);
+
+      const responseData = await response.json();
+      console.log('Update response data:', responseData);
+
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Erro ao atualizar evento');
+        throw new Error(responseData.error || 'Erro ao atualizar evento');
       }
-      
+
       // Retornar lista atualizada
-      return await storageService.getEvents();
+      const updatedList = await storageService.getEvents();
+      console.log('Updated events list:', updatedList);
+      return updatedList;
     } catch (error) {
       console.error('Error updating event:', error);
       throw error;
@@ -83,12 +91,12 @@ export const storageService = {
       const response = await fetch(`${API_BASE_URL}/events.php?id=${id}`, {
         method: 'DELETE'
       });
-      
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Erro ao deletar evento');
       }
-      
+
       // Retornar lista atualizada
       return await storageService.getEvents();
     } catch (error) {
@@ -112,12 +120,12 @@ export const storageService = {
           active: !currentActive
         })
       });
-      
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Erro ao alternar status');
       }
-      
+
       // Retornar lista atualizada
       return await storageService.getEvents();
     } catch (error) {
@@ -141,12 +149,12 @@ export const storageService = {
           toIndex
         })
       });
-      
+
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || 'Erro ao reordenar eventos');
       }
-      
+
       // Retornar lista atualizada
       return await storageService.getEvents();
     } catch (error) {
@@ -167,12 +175,12 @@ export const storageService = {
         },
         body: JSON.stringify({ password })
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         return data.authenticated === true;
       }
-      
+
       return false;
     } catch (error) {
       console.error('Error authenticating:', error);
@@ -252,18 +260,18 @@ export const storageService = {
   }): Promise<any> => {
     try {
       const queryParams = new URLSearchParams();
-      
+
       if (params?.type) queryParams.append('type', params.type);
       if (params?.event_id) queryParams.append('event_id', params.event_id);
       if (params?.period) queryParams.append('period', params.period.toString());
-      
+
       const url = `${API_BASE_URL}/analytics.php${queryParams.toString() ? '?' + queryParams.toString() : ''}`;
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         throw new Error('Erro ao buscar analytics');
       }
-      
+
       return await response.json();
     } catch (error) {
       console.error('Error fetching analytics:', error);

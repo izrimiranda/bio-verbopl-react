@@ -5,10 +5,10 @@
  */
 
 // Configurações do banco de dados
-define('DB_HOST', 'srv723.hstgr.io');
-define('DB_NAME', 'u959347836_links');
-define('DB_USER', 'u959347836_adminlink');
-define('DB_PASS', 'z00[jZ0Z|');
+define('DB_HOST', '205.172.59.146');
+define('DB_NAME', 'verboadmin_bio_db');
+define('DB_USER', 'verboadmin_bio');
+define('DB_PASS', 'i[)@Hrq_Aa-24YRK');
 define('DB_CHARSET', 'utf8mb4');
 
 // Headers CORS
@@ -26,11 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 /**
  * Classe de Conexão com o Banco de Dados
  */
-class Database {
+class Database
+{
     private static $instance = null;
     private $conn;
 
-    private function __construct() {
+    private function __construct()
+    {
         try {
             $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
             $options = [
@@ -38,7 +40,7 @@ class Database {
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ];
-            
+
             $this->conn = new PDO($dsn, DB_USER, DB_PASS, $options);
         } catch (PDOException $e) {
             error_log("Database connection error: " . $e->getMessage());
@@ -48,14 +50,16 @@ class Database {
         }
     }
 
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$instance === null) {
             self::$instance = new self();
         }
         return self::$instance;
     }
 
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->conn;
     }
 }
@@ -63,17 +67,20 @@ class Database {
 /**
  * Funções Auxiliares
  */
-function sendJSON($data, $statusCode = 200) {
+function sendJSON($data, $statusCode = 200)
+{
     http_response_code($statusCode);
     echo json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit();
 }
 
-function sendError($message, $statusCode = 400) {
+function sendError($message, $statusCode = 400)
+{
     sendJSON(['error' => $message], $statusCode);
 }
 
-function getRequestData() {
+function getRequestData()
+{
     $data = json_decode(file_get_contents('php://input'), true);
     return $data ?? [];
 }
